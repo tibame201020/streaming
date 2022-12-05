@@ -1,5 +1,6 @@
 package com.custom.stream.service;
 
+import com.custom.stream.model.gimy.GimyRankVideo;
 import com.custom.stream.model.gimy.GimyVideo;
 import com.custom.stream.model.gimy.GimyVideoDetail;
 import com.custom.stream.model.gimy.SearchResult;
@@ -14,5 +15,7 @@ public interface Tube {
 
     GimyVideoDetail getGimyVideoDetail(String url);
 
-    void watchGimyVideo(String url);
+    String watchGimyVideo(String url);
+
+    List<GimyRankVideo> getGimyRankList();
 }

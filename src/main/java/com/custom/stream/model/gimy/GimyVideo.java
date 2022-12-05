@@ -1,8 +1,11 @@
 package com.custom.stream.model.gimy;
 
-import com.custom.stream.provider.Configs;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import org.jsoup.nodes.Element;
+
+import static com.custom.stream.provider.Configs.*;
 
 @ToString
 @Getter
@@ -13,9 +16,9 @@ public class GimyVideo {
     private String img;
 
     public GimyVideo(Element element) {
-        this.name = element.attr(Configs.GIMY_SEARCH_RESULT_TITLE.toString());
-        this.url = Configs.GIMY_BASE + element.attr(Configs.GIMY_SEARCH_RESULT_URL.toString());
-        this.img = element.attr(Configs.GIMY_SEARCH_RESULT_IMG.toString());
+        this.name = element.attr(GIMY_SEARCH_RESULT_TITLE.toString());
+        this.url = GIMY_BASE + element.attr(GIMY_SEARCH_RESULT_URL.toString());
+        this.img = element.attr(GIMY_SEARCH_RESULT_IMG.toString());
     }
 
 }

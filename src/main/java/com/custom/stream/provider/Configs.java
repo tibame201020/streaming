@@ -10,11 +10,19 @@ public enum Configs {
 
     GIMY_SEARCH_PAGES_QUERY_SELECTOR(".pagegbk"),
     GIMY_VIDEO_DETAIL_QYERY_SELECTOR(".playlist-mobile"),
-    GIMY_VIDEO_DETAIL_CHANNEL_NAME(".gico");
+    GIMY_VIDEO_DETAIL_CHANNEL_NAME(".gico"),
+    GIMY_VIDEO_DETAIL_CHANNEL_SELECTOR("ul.clearfix li a"),
+
+    GIMY_RANK_URL("https://gimy.app/label/rank.html"),
+
+    GIMY_VIDEO_DETAIL_PLAYER_ID("#zanpiancms_player"),
+    GIMY_VIDEO_DETAIL_M3U8_REGEX("\"url\":\"(.*)\",\"url_next");
+
+    private final String str;
+
     Configs(String str) {
         this.str = str;
     }
-    private final String str;
 
     @Override
     public String toString() {

@@ -33,7 +33,7 @@ public class RestTemplateProvider {
     }
 
     public static Document htmlToDoc(String html, boolean isNeedClean) {
-        return isNeedClean? Jsoup.parseBodyFragment(Jsoup.clean(html, Safelist.basic())) : Jsoup.parseBodyFragment(html);
+        return isNeedClean ? Jsoup.parseBodyFragment(Jsoup.clean(html, Safelist.basic())) : Jsoup.parseBodyFragment(html);
     }
 
     public static Document htmlToDoc(String url, HttpMethod httpMethod, boolean isNeedClean) {
