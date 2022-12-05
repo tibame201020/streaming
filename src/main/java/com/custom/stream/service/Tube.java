@@ -6,6 +6,7 @@ import com.custom.stream.model.gimy.GimyVideoDetail;
 import com.custom.stream.model.gimy.SearchResult;
 
 import java.util.List;
+import java.util.Map;
 
 public interface Tube {
 
@@ -15,7 +16,7 @@ public interface Tube {
 
     GimyVideoDetail getGimyVideoDetail(String url);
 
-    String watchGimyVideo(String url);
+    Map<String, String> watchGimyVideo(String url);
 
     List<GimyRankVideo> getGimyRankList();
 }

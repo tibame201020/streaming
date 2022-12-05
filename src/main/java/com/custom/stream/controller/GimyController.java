@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/outer")
@@ -34,7 +35,7 @@ public class GimyController {
         return tube.getGimyVideoDetail(url);
     }
     @RequestMapping("/watchGimyVideo")
-    public String watchGimyVideo(@RequestBody String url) {
+    public Map<String, String> watchGimyVideo(@RequestBody String url) {
         return tube.watchGimyVideo(url);
     }
     @RequestMapping("/getGimyRankList")

@@ -9,7 +9,9 @@ import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -65,8 +67,11 @@ public class TubeImpl implements Tube {
     }
 
     @Override
-    public String watchGimyVideo(String url) {
+    public Map<String, String> watchGimyVideo(String url) {
+        Map<String, String> resultMap = new LinkedHashMap<>();
+
         Document doc = RestTemplateProvider.htmlToDoc(url, HttpMethod.GET, false);
+
         Elements element = doc.select(GIMY_VIDEO_DETAIL_PLAYER_ID.toString());
         Pattern pattern = Pattern.compile(GIMY_VIDEO_DETAIL_M3U8_REGEX.toString(), Pattern.MULTILINE);
         Matcher matcher = pattern.matcher(element.toString());
@@ -76,7 +81,9 @@ public class TubeImpl implements Tube {
                 m3u8.append(matcher.group(i));
             }
         }
-        return m3u8.toString();
+        resultMap.put("url", m3u8.toString());
+
+        return resultMap;
     }
 
     @Override
