@@ -25,13 +25,22 @@ public class TubeImpl implements Tube {
     public SearchResult getListByGimy(String keyword) {
         String url = GIMY_SEARCH_BASE + keyword;
         Document doc = RestTemplateProvider.htmlToDoc(url, HttpMethod.GET, false);
+
         List<GimyVideo> gimyVideos = new ArrayList<>();
         Elements elements = doc.select(GIMY_SEARCH_RESULT_QUERY_SELECTOR.toString());
         elements.forEach(element -> gimyVideos.add(new GimyVideo(element)));
+
+        String pagesHtml;
+        try {
+            pagesHtml = GIMY_BASE +
+                    doc.select(GIMY_SEARCH_PAGES_QUERY_SELECTOR.toString()).last().attr(GIMY_SEARCH_RESULT_URL.toString());
+        } catch (Exception e) {
+            pagesHtml = "";
+        }
+
         return new SearchResult(
                 url,
-                GIMY_BASE +
-                        doc.select(GIMY_SEARCH_PAGES_QUERY_SELECTOR.toString()).last().attr(GIMY_SEARCH_RESULT_URL.toString()),
+                pagesHtml,
                 gimyVideos);
     }
 
@@ -60,7 +69,9 @@ public class TubeImpl implements Tube {
                 String link = GIMY_BASE + videoLinkElement.attr(GIMY_SEARCH_RESULT_URL.toString());
                 videoLinks.add(new VideoLink(name, link));
             });
-            channels.add(new Channel(channelName, videoLinks));
+            if (videoLinks.size() > 0) {
+                channels.add(new Channel(channelName, videoLinks));
+            }
         });
 
         return new GimyVideoDetail(channels);
@@ -82,7 +93,6 @@ public class TubeImpl implements Tube {
             }
         }
         resultMap.put("url", m3u8.toString());
-
         return resultMap;
     }
 

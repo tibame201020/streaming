@@ -3,7 +3,7 @@ package com.custom.stream.provider;
 public enum Configs {
     GIMY_SEARCH_BASE("https://gimy.app/search/-------------.html?wd="),
     GIMY_BASE("https://gimy.app"),
-    GIMY_SEARCH_RESULT_QUERY_SELECTOR("#content .video-pic"),
+    GIMY_SEARCH_RESULT_QUERY_SELECTOR(".video-pic"),
     GIMY_SEARCH_RESULT_TITLE("title"),
     GIMY_SEARCH_RESULT_URL("href"),
     GIMY_SEARCH_RESULT_IMG("data-original"),
