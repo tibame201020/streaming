@@ -2,6 +2,7 @@ package com.custom.stream.model.gimy;
 
 import lombok.*;
 
+import java.io.Serializable;
 import java.util.List;
 
 @ToString
@@ -9,8 +10,6 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class SearchResult {
-    private String firstHtml;
-    private String pagesHtml;
-    private List<GimyVideo> gimyVideos;
+public class GimyVideoDetail implements Serializable {
+    private List<Channel> channels;
 }

@@ -1,8 +1,8 @@
 package com.custom.stream.model.gimy;
 
+import com.custom.stream.provider.Configs;
 import lombok.*;
-
-import static com.custom.stream.provider.GimyParser.BASE_URL;
+import org.jsoup.nodes.Element;
 
 @ToString
 @Getter
@@ -12,10 +12,10 @@ public class GimyVideo {
     private String url;
     private String img;
 
-    public GimyVideo(String videoStr) {
-        this.name = videoStr.substring(videoStr.indexOf("title=") + 7, videoStr.indexOf("data-original") - 2);
-        this.url = BASE_URL + videoStr.substring(videoStr.indexOf("/vod"), videoStr.indexOf("\" title="));
-        this.img = videoStr.substring(videoStr.indexOf("original=") + 10, videoStr.length() - 1);
+    public GimyVideo(Element element) {
+        this.name = element.attr(Configs.GIMY_SEARCH_RESULT_TITLE.toString());
+        this.url = Configs.GIMY_BASE + element.attr(Configs.GIMY_SEARCH_RESULT_URL.toString());
+        this.img = element.attr(Configs.GIMY_SEARCH_RESULT_IMG.toString());
     }
 
 }
