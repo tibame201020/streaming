@@ -26,8 +26,8 @@ public class GimyController {
     }
 
     @RequestMapping("/getListByPageUrlGimy")
-    public List<GimyVideo> getListByPageUrlGimy(@RequestBody String url) {
-        return tube.getListByPageUrlGimy(url);
+    public GimyVideo[] getListByPageUrlGimy(@RequestBody long page) {
+        return tube.getPageListPageFromDb(page);
     }
 
     @RequestMapping("/getGimyVideoDetail")

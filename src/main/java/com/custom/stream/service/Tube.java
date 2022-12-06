@@ -19,4 +19,6 @@ public interface Tube {
     Map<String, String> watchGimyVideo(String url);
 
     List<GimyRankVideo> getGimyRankList();
+
+    GimyVideo[] getPageListPageFromDb(long page);
 }

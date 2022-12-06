@@ -5,12 +5,14 @@ import lombok.Setter;
 import lombok.ToString;
 import org.jsoup.nodes.Element;
 
+import java.io.Serializable;
+
 import static com.custom.stream.provider.Configs.*;
 
 @ToString
 @Getter
 @Setter
-public class GimyVideo {
+public class GimyVideo implements Serializable {
     private String name;
     private String url;
     private String img;

@@ -11,6 +11,6 @@ import java.util.List;
 @AllArgsConstructor
 public class SearchResult {
     private String firstHtml;
-    private String pagesHtml;
+    private long pagesHtml;
     private List<GimyVideo> gimyVideos;
 }
