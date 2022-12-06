@@ -146,20 +146,20 @@ public class TubeImpl implements Tube {
     }
 
     @Override
-    public GimyVideo[] getPageListPageFromDb(long page) {
-
-        for (TempPagesData pagesData:
-             tempPagesDataRepo.findAll()) {
-            System.out.println(pagesData);
-        }
-
-        TempPagesData tempPagesData = tempPagesDataRepo.findById(page).orElse(new TempPagesData());
-
-        return tempPagesData.getGimyVideos();
+    public List<GimyVideo> getPageListPageFromDb(GimyPageReq gimyPageReq) {
+        return getListByPageUrlGimy(wrapperSearchUrl(gimyPageReq.getKeyword(), gimyPageReq.getPage()));
     }
 
-    public static void main(String[] args) {
-        TubeImpl tube = new TubeImpl();
-        tube.getListByGimy("信");
+    private String wrapperSearchUrl(String keyword, String page) {
+        String url;
+        switch (page) {
+            case "1":
+                url = GIMY_SEARCH_BASE + keyword;
+                break;
+            default:
+                url = String.format(GIMY_SEARCH_PAGE.toString(), keyword, page);
+                break;
+        }
+        return url;
     }
 }

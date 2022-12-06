@@ -1,9 +1,6 @@
 package com.custom.stream.controller;
 
-import com.custom.stream.model.gimy.GimyRankVideo;
-import com.custom.stream.model.gimy.GimyVideo;
-import com.custom.stream.model.gimy.GimyVideoDetail;
-import com.custom.stream.model.gimy.SearchResult;
+import com.custom.stream.model.gimy.*;
 import com.custom.stream.service.Tube;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,8 +23,8 @@ public class GimyController {
     }
 
     @RequestMapping("/getListByPageUrlGimy")
-    public GimyVideo[] getListByPageUrlGimy(@RequestBody long page) {
-        return tube.getPageListPageFromDb(page);
+    public List<GimyVideo> getListByPageUrlGimy(@RequestBody GimyPageReq gimyPageReq) {
+        return tube.getPageListPageFromDb(gimyPageReq);
     }
 
     @RequestMapping("/getGimyVideoDetail")

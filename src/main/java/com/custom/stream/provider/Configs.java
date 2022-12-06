@@ -16,7 +16,8 @@ public enum Configs {
     GIMY_RANK_URL("https://gimy.app/label/rank.html"),
 
     GIMY_VIDEO_DETAIL_PLAYER_ID("#zanpiancms_player"),
-    GIMY_VIDEO_DETAIL_M3U8_REGEX("\"url\":\"(.*)\",\"url_next");
+    GIMY_VIDEO_DETAIL_M3U8_REGEX("\"url\":\"(.*)\",\"url_next"),
+    GIMY_SEARCH_PAGE(GIMY_BASE + "/search/%s----------%s---\\.html");
 
     private final String str;
 

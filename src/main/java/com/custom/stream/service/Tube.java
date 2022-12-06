@@ -1,9 +1,6 @@
 package com.custom.stream.service;
 
-import com.custom.stream.model.gimy.GimyRankVideo;
-import com.custom.stream.model.gimy.GimyVideo;
-import com.custom.stream.model.gimy.GimyVideoDetail;
-import com.custom.stream.model.gimy.SearchResult;
+import com.custom.stream.model.gimy.*;
 
 import java.util.List;
 import java.util.Map;
@@ -20,5 +17,5 @@ public interface Tube {
 
     List<GimyRankVideo> getGimyRankList();
 
-    GimyVideo[] getPageListPageFromDb(long page);
+    List<GimyVideo> getPageListPageFromDb(GimyPageReq page);
 }
