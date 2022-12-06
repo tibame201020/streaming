@@ -18,4 +18,8 @@ public interface Tube {
     List<GimyRankVideo> getGimyRankList();
 
     List<GimyVideo> getPageListPageFromDb(GimyPageReq page);
+
+    List<GimyHistory> getGimyHistory();
+
+    void addGimyHistory(GimyHistory gimyHistory);
 }

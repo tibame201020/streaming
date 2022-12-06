@@ -2,7 +2,7 @@ package com.custom.stream.service.impl;
 
 import com.custom.stream.model.gimy.*;
 import com.custom.stream.provider.RestTemplateProvider;
-import com.custom.stream.repo.TempPagesDataRepo;
+import com.custom.stream.repo.GimyHistoryRepo;
 import com.custom.stream.service.Tube;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
@@ -10,25 +10,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.sql.Timestamp;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import static com.custom.stream.provider.Configs.*;
 
 @Service
 public class TubeImpl implements Tube {
-    @Autowired
-    private TempPagesDataRepo tempPagesDataRepo;
 
+    @Autowired
+    private GimyHistoryRepo gimyHistoryRepo;
 
     @Override
     public SearchResult getListByGimy(String keyword) {
-        deleteTempPageData();
-
         String url = GIMY_SEARCH_BASE + keyword;
         Document doc = RestTemplateProvider.htmlToDoc(url, HttpMethod.GET, false);
 
@@ -53,26 +50,11 @@ public class TubeImpl implements Tube {
         } else {
             totalPages = Integer.parseInt(matcher.group(2));
         }
-        String finalPagesHtml = pagesHtml;
-        new Thread(() -> getPagesData(finalPagesHtml, totalPages, gimyVideos.stream().toArray(GimyVideo[]::new))).start();
 
         return new SearchResult(
                 url,
                 totalPages,
                 gimyVideos);
-    }
-
-    private void getPagesData(String pagesUrl, int totalPages, GimyVideo[] firstPageData) {
-        tempPagesDataRepo.save(new TempPagesData(1, firstPageData));
-        for (int i = 2; i <= totalPages ; i++) {
-            String url = pagesUrl.replace(String.valueOf(totalPages), String.valueOf(i));
-            List<GimyVideo> gimyVideos = getListByPageUrlGimy(url);
-            tempPagesDataRepo.save(new TempPagesData((long) i, gimyVideos.stream().toArray(GimyVideo[]::new)));
-        }
-    }
-
-    private void deleteTempPageData() {
-        tempPagesDataRepo.deleteAll();
     }
 
     @Override
@@ -150,15 +132,28 @@ public class TubeImpl implements Tube {
         return getListByPageUrlGimy(wrapperSearchUrl(gimyPageReq.getKeyword(), gimyPageReq.getPage()));
     }
 
-    private String wrapperSearchUrl(String keyword, String page) {
+    @Override
+    public List<GimyHistory> getGimyHistory() {
+        return gimyHistoryRepo.findAll();
+    }
+
+    @Override
+    public void addGimyHistory(GimyHistory gimyHistory) {
+        gimyHistory.setWatchTime(new Timestamp(System.currentTimeMillis()));
+        gimyHistoryRepo.save(gimyHistory);
+
+        List<GimyHistory> gimyHistories = gimyHistoryRepo.findAll();
+        if (gimyHistories.size() > 11) {
+            gimyHistoryRepo.delete(gimyHistories.get(0));
+        }
+    }
+
+    private String wrapperSearchUrl(String keyword, int page) {
         String url;
-        switch (page) {
-            case "1":
-                url = GIMY_SEARCH_BASE + keyword;
-                break;
-            default:
-                url = String.format(GIMY_SEARCH_PAGE.toString(), keyword, page);
-                break;
+        if (page == 1) {
+            url = GIMY_SEARCH_BASE + keyword;
+        } else {
+            url = String.format(GIMY_SEARCH_PAGE.toString(), keyword, page);
         }
         return url;
     }

@@ -40,4 +40,14 @@ public class GimyController {
         return tube.getGimyRankList();
     }
 
+    @RequestMapping("/getGimyHistory")
+    public List<GimyHistory> getGimyHistory(){
+        return tube.getGimyHistory();
+    }
+
+    @RequestMapping("/addGimyHistory")
+    public void addGimyHistory(@RequestBody GimyHistory gimyHistory){
+        tube.addGimyHistory(gimyHistory);
+    }
+
 }

@@ -9,5 +9,5 @@ import lombok.ToString;
 @Getter
 public class GimyPageReq {
     private String keyword;
-    private String page;
+    private int page;
 }

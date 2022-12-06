@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import java.io.Serializable;
+import java.sql.Timestamp;
 
 @ToString
 @Getter
@@ -13,9 +14,10 @@ import java.io.Serializable;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-public class TempPagesData implements Serializable {
+public class GimyHistory implements Serializable {
     @Id
-    private long page;
-    @Lob
-    private GimyVideo[] gimyVideos;
+    private Timestamp watchTime;
+    private String historyStr;
+    private String channelUrl;
+    private String videoUrl;
 }
