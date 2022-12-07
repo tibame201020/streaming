@@ -40,4 +40,12 @@ public class RestTemplateProvider {
         return htmlToDoc(exchange(url, httpMethod), isNeedClean);
     }
 
+    public static Document getByJoup(String url) {
+        try {
+           return Jsoup.connect(url).get();
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
 }
