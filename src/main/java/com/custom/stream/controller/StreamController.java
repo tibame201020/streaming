@@ -28,12 +28,17 @@ public class StreamController {
     }
     @RequestMapping("/getStreamByClickChannel")
     public Map<String, Object> getStreamByClickChannel(@RequestBody String channelUrl) throws Exception {
-        return basket.getStreamByClickChannel(channelUrl);
+        return basket.getStreamByClickChannel(channelUrl, true);
     }
     @RequestMapping("/readHtmlStr")
     public Map<String, String> readHtmlStr(@RequestBody String url) throws Exception {
         Map<String, String> rtnMap = new LinkedHashMap<>();
         rtnMap.put("html", basket.readHtmlStr(url));
         return rtnMap;
+    }
+
+    @RequestMapping("/getStreamToExternal")
+    public Map<String, Object> getStreamToExternal(@RequestBody String channelUrl) throws Exception {
+        return basket.getStreamByClickChannel(channelUrl, false);
     }
 }

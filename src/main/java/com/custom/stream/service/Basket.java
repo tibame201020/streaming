@@ -13,7 +13,7 @@ public interface Basket {
 
     List<Channel> getStreamChannel(String streamUrl) throws Exception;
 
-    Map<String, Object> getStreamByClickChannel(String channelUrl) throws Exception;
+    Map<String, Object> getStreamByClickChannel(String channelUrl, boolean isTryM3u8) throws Exception;
 
     String readHtmlStr(String url) throws Exception;
 }
