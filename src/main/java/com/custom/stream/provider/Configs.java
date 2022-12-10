@@ -19,9 +19,7 @@ public enum Configs {
     GIMY_VIDEO_DETAIL_M3U8_REGEX("\"url\":\"(.*)\",\"url_next"),
     GIMY_SEARCH_PAGE(GIMY_BASE + "/search/%s----------%s---\\.html"),
 
-    NBA_STREAM_INDEX_URL("https://www1.nbabite.com/"),
-
-    NBA_STREAM_CHANNEL_BASE_URL("https://sportscentral.io/streams-table/%s/basketball?new-ui=1&origin=www1.nbabite.com");
+    NBA_STREAM_INDEX_URL("https://www1.nbabite.com/");
 
     private final String str;
 

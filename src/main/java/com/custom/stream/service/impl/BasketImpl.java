@@ -14,16 +14,14 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.custom.stream.provider.Configs.NBA_STREAM_CHANNEL_BASE_URL;
 import static com.custom.stream.provider.Configs.NBA_STREAM_INDEX_URL;
-import static com.custom.stream.provider.JsoupProvider.urlToDoc;
 
 @Service
 public class BasketImpl implements Basket {
 
     @Override
     public List<NbaGame> getGames() throws Exception {
-        Document document = urlToDoc(NBA_STREAM_INDEX_URL.toString(), false);
+        Document document = Jsoup.connect(NBA_STREAM_INDEX_URL.toString()).get();
         Element nbaGamesCollection = document.select("#competitions").select("div.competition").first();
         Elements nbaGameElements = nbaGamesCollection.select(".matches").select("div.col-md-6");
 
@@ -33,12 +31,13 @@ public class BasketImpl implements Basket {
                 nbaGameElements) {
             nbaGames.add(new NbaGame(nbaGameElement));
         }
+
         return nbaGames;
     }
 
     @Override
     public List<Channel> getStreamChannel(String streamUrl) throws Exception {
-        Document document = urlToDoc(streamUrl, false);
+        Document document = Jsoup.connect(streamUrl).get();
 
         String html = document.toString();
         String channelIdTag = "streamsMatchId";
@@ -49,8 +48,9 @@ public class BasketImpl implements Basket {
         String channelId = html.substring(startIdx, endIdx);
         channelId = channelId.trim().substring(0, channelId.trim().length() -1);
 
-        String channelUrl = String.format(NBA_STREAM_CHANNEL_BASE_URL.toString(), channelId);
-        document = urlToDoc(channelUrl, false);
+        String channelBaseUrl = "https://sportscentral.io/streams-table/%s/basketball?new-ui=1&origin=www1.nbabite.com";
+        String channelUrl = String.format(channelBaseUrl, channelId);
+        document = Jsoup.connect(channelUrl).get();
 
         List<Channel> channels = new ArrayList<>();
 
@@ -67,7 +67,7 @@ public class BasketImpl implements Basket {
 
     @Override
     public Map<String, Object> getStreamByClickChannel(String channelUrl, boolean isTryM3u8) throws Exception {
-        Document document = urlToDoc(channelUrl, false);
+        Document document = Jsoup.connect(channelUrl).get();
         String streamUrl = document.select(".navbar-collapse").select("a").attr("href");
 
         Map<String, Object> rtnMap = new LinkedHashMap<>();
@@ -87,8 +87,13 @@ public class BasketImpl implements Basket {
         return rtnMap;
     }
 
-    private String handleWeakstreams(String url) throws Exception {
-        return Jsoup.parse(urlToDoc(url, false).select("#gamecard").select("textarea").text()).select("iframe").attr("src");
+    @Override
+    public String readHtmlStr(String url) throws Exception {
+        return Jsoup.connect(url).get().html();
+    }
+
+    private String handleWeakstreams(String streamUrl) throws Exception {
+        return Jsoup.parse(Jsoup.connect(streamUrl).get().select("#gamecard").select("textarea").text()).select("iframe").attr("src");
     }
 
 

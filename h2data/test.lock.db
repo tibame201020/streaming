@@ -1,6 +1,6 @@
 #FileLock
-#Sat Dec 10 09:35:07 CST 2022
+#Sat Dec 10 09:42:06 CST 2022
 hostName=Jeff-Hsu
-id=184f9abe38cd9277c32a910f929abf9ad6d5c3a49a5
+id=184f9b2479cf6962272e1ee18e78cc717ebac15c747
 method=file
-server=192.168.32.1\:3505
+server=192.168.32.1\:7310
